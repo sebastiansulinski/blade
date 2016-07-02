@@ -16,14 +16,14 @@ use Illuminate\View\Compilers\BladeCompiler;
 class Blade
 {
     /**
-     * Paths to the directories containing view files.
+     * Path(s) to the directories containing view files.
      *
      * @var array
      */
     private $viewPaths = [];
 
     /**
-     * Path to the view cache directory.
+     * Path to the cache directory.
      *
      * @var string
      */
@@ -41,8 +41,8 @@ class Blade
      *
      * @param string|array $viewPaths
      * @param string $cachePath
-     * @param Container $app
-     * @param Dispatcher $events
+     * @param Container|null $app
+     * @param Dispatcher|null $events
      */
     public function __construct(
         $viewPaths,
@@ -64,7 +64,7 @@ class Blade
     }
 
     /**
-     * Bind file system.
+     * Register file system.
      *
      * @param Filesystem $filesystem
      * @return void
@@ -77,7 +77,7 @@ class Blade
     }
 
     /**
-     * Bind event dispatcher.
+     * Register event dispatcher.
      *
      * @param Dispatcher $events
      * @return void
@@ -90,7 +90,7 @@ class Blade
     }
 
     /**
-     * Bind blade compiler.
+     * Register blade compiler.
      *
      * @return void
      */
@@ -107,7 +107,7 @@ class Blade
     }
 
     /**
-     * Bind engine resolver.
+     * Register view engine resolver.
      *
      * @param EngineResolver $resolver
      * @return void
@@ -125,7 +125,7 @@ class Blade
     }
 
     /**
-     * Bind php engine.
+     * Register php engine.
      *
      * @param EngineResolver $resolver
      * @return void
@@ -138,10 +138,11 @@ class Blade
     }
 
     /**
-     * Bind blade engine.
+     * Register blade engine.
      *
      * @param EngineResolver $resolver
      * @param Container $app
+     * @return void
      */
     private function registerBladeEngine(EngineResolver $resolver, Container $app)
     {
@@ -151,7 +152,7 @@ class Blade
     }
 
     /**
-     * Bind view finder.
+     * Register view finder.
      *
      * @return void
      */
@@ -168,9 +169,9 @@ class Blade
     }
 
     /**
-     * Get view factory instance.
+     * Register view factory.
      *
-     * @return Factory
+     * @return void
      */
     private function registerFactory()
     {
