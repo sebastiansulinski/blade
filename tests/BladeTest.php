@@ -46,7 +46,7 @@ class BladeTest extends PHPUnit_Framework_TestCase
 
         $this->assertInstanceOf(
             Container::class,
-            $this->blade->container,
+            $this->blade->app,
             'Blade::$container did not return instance of Container'
         );
     }
@@ -58,7 +58,7 @@ class BladeTest extends PHPUnit_Framework_TestCase
     {
         $this->assertInstanceOf(
             Filesystem::class,
-            $this->blade->container['files'],
+            $this->blade->app['files'],
             'Blade::$container[files] did not return instance of Filesystem'
         );
     }
@@ -70,7 +70,7 @@ class BladeTest extends PHPUnit_Framework_TestCase
     {
         $this->assertInstanceOf(
             Dispatcher::class,
-            $this->blade->container['events'],
+            $this->blade->app['events'],
             'Blade::$container[events] did not return instance of event Dispatcher'
         );
     }
@@ -82,7 +82,7 @@ class BladeTest extends PHPUnit_Framework_TestCase
     {
         $this->assertInstanceOf(
             BladeCompiler::class,
-            $this->blade->container['blade.compiler'],
+            $this->blade->app['blade.compiler'],
             'Blade::$container[blade.compiler] did not return instance of BladeCompiler'
         );
     }
@@ -94,19 +94,19 @@ class BladeTest extends PHPUnit_Framework_TestCase
     {
         $this->assertInstanceOf(
             EngineResolver::class,
-            $this->blade->container['view.engine.resolver'],
+            $this->blade->app['view.engine.resolver'],
             'Blade::$container[view.engine.resolver] did not return instance of EngineResolver'
         );
 
         $this->assertInstanceOf(
             PhpEngine::class,
-            $this->blade->container['view.engine.resolver']->resolve('php'),
+            $this->blade->app['view.engine.resolver']->resolve('php'),
             'Blade::$container[view.engine.resolver]->resolve(php) did not return instance of PhpEngine'
         );
 
         $this->assertInstanceOf(
             CompilerEngine::class,
-            $this->blade->container['view.engine.resolver']->resolve('blade'),
+            $this->blade->app['view.engine.resolver']->resolve('blade'),
             'Blade::$container[view.engine.resolver]->resolve(blade) did not return instance of CompilerEngine'
         );
     }
@@ -118,7 +118,7 @@ class BladeTest extends PHPUnit_Framework_TestCase
     {
         $this->assertInstanceOf(
             FileViewFinder::class,
-            $this->blade->container['view.finder'],
+            $this->blade->app['view.finder'],
             'Blade::$container[view.finder] did not return instance of FileViewFinder'
         );
     }
