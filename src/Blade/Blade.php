@@ -41,19 +41,19 @@ class Blade
      *
      * @param string|array $viewPaths
      * @param string $cachePath
-     * @param Container $container
+     * @param Container $app
      * @param Dispatcher $events
      */
     public function __construct(
         $viewPaths,
         $cachePath,
-        Container $container = null,
+        Container $app = null,
         Dispatcher $events = null
     )
     {
         $this->viewPaths = (array) $viewPaths;
         $this->cachePath = $cachePath;
-        $this->app = $container ?: new Container;
+        $this->app = $app ?: new Container;
 
         $this->registerFileSystem(new Filesystem);
         $this->registerEvents($events ?: new Dispatcher);

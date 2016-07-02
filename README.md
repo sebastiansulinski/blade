@@ -8,7 +8,7 @@ Blade constructor takes 4 arguments, 2 of which are optional:
 ```
 $viewPaths: // either a string or array of paths where your views will be fetched from
 $cachePath: // string representing the path to the cache directory (to store cached version of the views)
-Container $container = null: // instance of the Illuminate\Container\Container (optional)
+Container $app = null: // instance of the Illuminate\Container\Container (optional)
 Dispatcher $events = null: // instance of the Illuminate\Events\Dispatcher (optional)
 ```
 
@@ -57,10 +57,62 @@ $blade->view('dashboard');
 // has instance of $user available
 ```
 
+#### Blade vew template
+
 Use blade view templates the same way as with [Laravel](https://laravel.com/docs/master/blade)
 
 ```
 // index.blade.php
+
+@extends('template.layout')
+
+@section('content')
+
+<h1>Hallo {{ $user->name }}</h1>
+
+@endsection
+```
+
+#### Example
+
+```
+// /public/index.php
+
+$blade = new Blade(
+    realpath(__DIR__ . '/../resources/views'),
+    realpath(__DIR__ . '/../resources/cache')
+);
+
+$user = User::find(1);
+
+echo $blade->view('pages.index', compact('user'));
+
+
+// /resources/views/template/layout.blade.php
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>Title</title>
+</head>
+<body>
+
+<div class="row">
+
+    <div class="column">
+
+        @yield('content')
+
+    </div>
+
+</div>
+
+</body>
+</html>
+
+
+// /resources/views/pages/index.blade.php
 
 @extends('template.layout')
 
