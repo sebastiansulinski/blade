@@ -14,7 +14,7 @@ Dispatcher $events = null: // instance of the Illuminate\Events\Dispatcher (opti
 
 With new instance of the Blade class you can call the `view()` methods the same way as from within Laravel using [view()](https://laravel.com/docs/master/views) helper.
 
-```
+```php
 $blade = new Blade(
     realpath(__DIR__ . '/../resources/views'),
     realpath(__DIR__ . '/../resources/cache')
@@ -22,7 +22,7 @@ $blade = new Blade(
 ```
 
 #### Passing variables
-```
+```php
 $user = User::find(1);
 
 $blade->view('index', compact('user'));
@@ -33,17 +33,17 @@ $blade->view('index')->with('user', $user);
 ```
 
 #### Determining if a view exists
-```
+```php
 $blade->view()->exists('test');
 ```
 
 #### Sharing data with all views
-```
+```php
 $blade->share('user', $user);
 ```
 
 #### View composers
-```
+```php
 $blade->view()->composer('dashboard', function(View $view) {
 
     $user = new stdClass;
@@ -61,7 +61,7 @@ $blade->view('dashboard');
 
 Use blade view templates the same way as with [Laravel](https://laravel.com/docs/master/blade)
 
-```
+```php
 // index.blade.php
 
 @extends('template.layout')
@@ -75,7 +75,7 @@ Use blade view templates the same way as with [Laravel](https://laravel.com/docs
 
 #### Example
 
-```
+```php
 // /public/index.php
 
 $blade = new Blade(
