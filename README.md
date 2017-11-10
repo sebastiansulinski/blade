@@ -7,7 +7,7 @@ Package to allow you use blade templates outside of Laravel.
 
 Blade constructor takes 4 arguments, 2 of which are optional:
 
-```
+```php
 $viewPaths: // either a string or array of paths where your views will be fetched from
 $cachePath: // string representing the path to the cache directory (to store cached version of the views)
 Container $app = null: // instance of the Illuminate\Container\Container (optional)
