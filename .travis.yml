@@ -6,7 +6,7 @@ php:
   - nightly
 
 before_script:
-  - composer install --no-interactions
+  - composer install --no-interaction
 
 script:
   - vendor/bin/phpunit
