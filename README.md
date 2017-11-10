@@ -1,6 +1,8 @@
 # Blade
 Package to allow you use blade templates outside of Laravel.
 
+[![Build Status](https://travis-ci.org/sebastiansulinski/blade.svg?branch=master)](https://travis-ci.org/sebastiansulinski/blade)
+
 ### Usage instructions
 
 Blade constructor takes 4 arguments, 2 of which are optional:
