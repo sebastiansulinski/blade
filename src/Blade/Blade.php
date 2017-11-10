@@ -2,7 +2,6 @@
 
 namespace SSD\Blade;
 
-use Illuminate\View\View;
 use Illuminate\View\Factory;
 use Illuminate\Events\Dispatcher;
 use Illuminate\View\FileViewFinder;
@@ -32,17 +31,17 @@ class Blade
     /**
      * Container instance.
      *
-     * @var Container
+     * @var \Illuminate\Container\Container
      */
     public $app;
 
     /**
      * Blade constructor.
      *
-     * @param string|array $viewPaths
-     * @param string $cachePath
-     * @param Container|null $app
-     * @param Dispatcher|null $events
+     * @param  string|array  $viewPaths
+     * @param  string  $cachePath
+     * @param  Container|null  $app
+     * @param  Dispatcher|null  $events
      */
     public function __construct(
         $viewPaths,
@@ -66,10 +65,10 @@ class Blade
     /**
      * Register file system.
      *
-     * @param Filesystem $filesystem
+     * @param  \Illuminate\Filesystem\Filesystem  $filesystem
      * @return void
      */
-    private function registerFileSystem(Filesystem $filesystem)
+    private function registerFileSystem(Filesystem $filesystem): void
     {
         $this->app->singleton('files', function() use ($filesystem) {
             return $filesystem;
@@ -79,10 +78,10 @@ class Blade
     /**
      * Register event dispatcher.
      *
-     * @param Dispatcher $events
+     * @param  \Illuminate\Events\Dispatcher  $events
      * @return void
      */
-    private function registerEvents(Dispatcher $events)
+    private function registerEvents(Dispatcher $events): void
     {
         $this->app->singleton('events', function() use ($events) {
             return $events;
@@ -94,7 +93,7 @@ class Blade
      *
      * @return void
      */
-    private function registerBladeCompiler()
+    private function registerBladeCompiler(): void
     {
         $this->app->singleton('blade.compiler', function($app) {
 
@@ -109,10 +108,10 @@ class Blade
     /**
      * Register view engine resolver.
      *
-     * @param EngineResolver $resolver
+     * @param  \Illuminate\View\Engines\EngineResolver  $resolver
      * @return void
      */
-    private function registerEngineResolver(EngineResolver $resolver)
+    private function registerEngineResolver(EngineResolver $resolver): void
     {
         $this->app->singleton('view.engine.resolver', function($app) use ($resolver) {
 
@@ -127,10 +126,10 @@ class Blade
     /**
      * Register php engine.
      *
-     * @param EngineResolver $resolver
+     * @param  \Illuminate\View\Engines\EngineResolver  $resolver
      * @return void
      */
-    private function registerPhpEngine(EngineResolver $resolver)
+    private function registerPhpEngine(EngineResolver $resolver): void
     {
         $resolver->register('php', function() {
             return new PhpEngine;
@@ -140,11 +139,11 @@ class Blade
     /**
      * Register blade engine.
      *
-     * @param EngineResolver $resolver
-     * @param Container $app
+     * @param  \Illuminate\View\Engines\EngineResolver  $resolver
+     * @param  \Illuminate\Container\Container  $app
      * @return void
      */
-    private function registerBladeEngine(EngineResolver $resolver, Container $app)
+    private function registerBladeEngine(EngineResolver $resolver, Container $app): void
     {
         $resolver->register('blade', function() use($app) {
             return new CompilerEngine($app['blade.compiler']);
@@ -156,7 +155,7 @@ class Blade
      *
      * @return void
      */
-    private function registerViewFinder()
+    private function registerViewFinder(): void
     {
         $this->app->singleton('view.finder', function($app) {
 
@@ -173,7 +172,7 @@ class Blade
      *
      * @return void
      */
-    private function registerFactory()
+    private function registerFactory(): void
     {
         $this->app->singleton('view', function($app) {
 
@@ -194,10 +193,10 @@ class Blade
     /**
      * Get the evaluated view contents for the given view.
      *
-     * @param null $view
-     * @param array $data
-     * @param array $mergeData
-     * @return Factory|View
+     * @param  null  $view
+     * @param  array  $data
+     * @param  array  $mergeData
+     * @return \Illuminate\View\Factory|\Illuminate\View\View
      */
     public function view($view = null, $data = [], $mergeData = [])
     {

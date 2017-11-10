@@ -1,9 +1,13 @@
 <?php
 
+namespace SSDTest;
+
 use SSD\Blade\Blade;
 
+use stdClass;
 use Illuminate\View\View;
 use Illuminate\View\Factory;
+use PHPUnit\Framework\TestCase;
 use Illuminate\Events\Dispatcher;
 use Illuminate\Container\Container;
 use Illuminate\View\FileViewFinder;
@@ -13,7 +17,7 @@ use Illuminate\View\Engines\EngineResolver;
 use Illuminate\View\Engines\CompilerEngine;
 use Illuminate\View\Compilers\BladeCompiler;
 
-class BladeTest extends PHPUnit_Framework_TestCase
+class BladeTest extends TestCase
 {
     /**
      * @var Blade

@@ -2,15 +2,21 @@
     "name": "sebastiansulinski/blade",
     "description": "Blade templates outside of laravel.",
     "require": {
-        "illuminate/view": "^5.4",
-        "illuminate/events": "^5.4"
+        "php": "^7.1",
+        "illuminate/view": "^5.5",
+        "illuminate/events": "^5.5"
     },
     "require-dev": {
-        "phpunit/phpunit": "^6.2"
+        "phpunit/phpunit": "^6.4"
     },
     "autoload": {
         "psr-4": {
-            "SSD\\": "src"
+            "SSD\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "SSDTest\\": "tests/"
         }
     },
     "license": "MIT",
