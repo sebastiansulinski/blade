@@ -12,6 +12,7 @@ $viewPaths: // either a string or array of paths where your views will be fetche
 $cachePath: // string representing the path to the cache directory (to store cached version of the views)
 Container $app = null: // instance of the Illuminate\Container\Container (optional)
 Dispatcher $events = null: // instance of the Illuminate\Events\Dispatcher (optional)
+Filesystem $events = null: // instance of the Illuminate\Events\Filesystem (optional)
 ```
 
 With new instance of the Blade class you can call the `view()` methods the same way as from within Laravel using [view()](https://laravel.com/docs/master/views) helper.
