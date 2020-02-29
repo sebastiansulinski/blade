@@ -38,23 +38,24 @@ class Blade
     /**
      * Blade constructor.
      *
-     * @param  string|array  $viewPaths
-     * @param  string  $cachePath
-     * @param  Container|null  $app
-     * @param  Dispatcher|null  $events
+     * @param  string|array $viewPaths
+     * @param  string $cachePath
+     * @param  Container|null $app
+     * @param  Dispatcher|null $events
+     * @param  \Illuminate\Filesystem\Filesystem|null $filesystem
      */
     public function __construct(
         $viewPaths,
         $cachePath,
         Container $app = null,
-        Dispatcher $events = null
-    )
-    {
-        $this->viewPaths = (array) $viewPaths;
+        Dispatcher $events = null,
+        Filesystem $filesystem = null
+    ) {
+        $this->viewPaths = (array)$viewPaths;
         $this->cachePath = $cachePath;
         $this->app = $app ?: new Container;
 
-        $this->registerFileSystem(new Filesystem);
+        $this->registerFileSystem($filesystem ?: new Filesystem);
         $this->registerEvents($events ?: new Dispatcher);
         $this->registerEngineResolver(new EngineResolver);
         $this->registerBladeCompiler();
@@ -65,12 +66,12 @@ class Blade
     /**
      * Register file system.
      *
-     * @param  \Illuminate\Filesystem\Filesystem  $filesystem
+     * @param  \Illuminate\Filesystem\Filesystem $filesystem
      * @return void
      */
     private function registerFileSystem(Filesystem $filesystem): void
     {
-        $this->app->singleton('files', function() use ($filesystem) {
+        $this->app->singletonIf('files', function () use ($filesystem) {
             return $filesystem;
         });
     }
@@ -78,12 +79,12 @@ class Blade
     /**
      * Register event dispatcher.
      *
-     * @param  \Illuminate\Events\Dispatcher  $events
+     * @param  \Illuminate\Events\Dispatcher $events
      * @return void
      */
     private function registerEvents(Dispatcher $events): void
     {
-        $this->app->singleton('events', function() use ($events) {
+        $this->app->singletonIf('events', function () use ($events) {
             return $events;
         });
     }
@@ -95,7 +96,7 @@ class Blade
      */
     private function registerBladeCompiler(): void
     {
-        $this->app->singleton('blade.compiler', function($app) {
+        $this->app->singleton('blade.compiler', function ($app) {
 
             return new BladeCompiler(
                 $app['files'],
@@ -108,12 +109,12 @@ class Blade
     /**
      * Register view engine resolver.
      *
-     * @param  \Illuminate\View\Engines\EngineResolver  $resolver
+     * @param  \Illuminate\View\Engines\EngineResolver $resolver
      * @return void
      */
     private function registerEngineResolver(EngineResolver $resolver): void
     {
-        $this->app->singleton('view.engine.resolver', function($app) use ($resolver) {
+        $this->app->singleton('view.engine.resolver', function ($app) use ($resolver) {
 
             $this->registerPhpEngine($resolver);
             $this->registerBladeEngine($resolver, $app);
@@ -126,12 +127,12 @@ class Blade
     /**
      * Register php engine.
      *
-     * @param  \Illuminate\View\Engines\EngineResolver  $resolver
+     * @param  \Illuminate\View\Engines\EngineResolver $resolver
      * @return void
      */
     private function registerPhpEngine(EngineResolver $resolver): void
     {
-        $resolver->register('php', function() {
+        $resolver->register('php', function () {
             return new PhpEngine;
         });
     }
@@ -139,13 +140,13 @@ class Blade
     /**
      * Register blade engine.
      *
-     * @param  \Illuminate\View\Engines\EngineResolver  $resolver
-     * @param  \Illuminate\Container\Container  $app
+     * @param  \Illuminate\View\Engines\EngineResolver $resolver
+     * @param  \Illuminate\Container\Container $app
      * @return void
      */
     private function registerBladeEngine(EngineResolver $resolver, Container $app): void
     {
-        $resolver->register('blade', function() use($app) {
+        $resolver->register('blade', function () use ($app) {
             return new CompilerEngine($app['blade.compiler']);
         });
     }
@@ -157,7 +158,7 @@ class Blade
      */
     private function registerViewFinder(): void
     {
-        $this->app->singleton('view.finder', function($app) {
+        $this->app->singleton('view.finder', function ($app) {
 
             return new FileViewFinder(
                 $app['files'],
@@ -174,7 +175,7 @@ class Blade
      */
     private function registerFactory(): void
     {
-        $this->app->singleton('view', function($app) {
+        $this->app->singleton('view', function ($app) {
 
             $factory = new Factory(
                 $app['view.engine.resolver'],
@@ -193,9 +194,9 @@ class Blade
     /**
      * Get the evaluated view contents for the given view.
      *
-     * @param  null  $view
-     * @param  array  $data
-     * @param  array  $mergeData
+     * @param  null $view
+     * @param  array $data
+     * @param  array $mergeData
      * @return \Illuminate\View\Factory|\Illuminate\View\View
      */
     public function view($view = null, $data = [], $mergeData = [])
